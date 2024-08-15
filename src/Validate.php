@@ -1,0 +1,91 @@
+<?php 
+namespace App;
+
+use App\User;
+use App\Transaction;
+use App\TransactionType;
+
+class Validate {
+    private $_passed = false;
+    private $_erros = [];
+    
+    // initialize db
+    public function __construct()
+    {
+    }
+    
+    public function check( $source, $items = [] ) {      
+        // check required field
+        if ( !empty( $items ) ) {
+            foreach ($items as $key => $item) {                
+                if ( ! Input::get($item)  ) {
+                    $this->addError("{$item} is required!");
+                }
+            }
+        }
+        
+        // check user already exists 
+        if ( !empty( $source['email'] ) && !empty( $source['name'] )) {            
+            $user = new User();
+            $user_email = $source['email'];
+            if ( $user->exists( $user_email ) ) {
+                $this->addError("{$user_email} is already exists!");
+            }                                  
+        }
+        
+        // check password mismatch
+        if ( !empty( $source['password'] ) && !empty( $source['confirm_password'] ) ) {                                
+            if ( $source['password'] !== $source['confirm_password']) {
+                $this->addError("Password does not match!");
+            }          
+        }
+        
+        // check if withdraw amount is less than deposited amount
+        if ( isset( $source['transaction_type'] ) && $source['transaction_type'] == TransactionType::WITHDRAW ) {
+            $transaction = new Transaction();
+            $user = new User;
+            $user_obj = $user->data();
+            $total_deposited_amount = $transaction->getCurrentBalance( $user_obj->user_id );        
+            
+            if ( $source['amount'] > $total_deposited_amount ) {
+                $this->addError( 'Withdraw amount must be less than Deposited amount' );                
+            }
+        }
+        
+        // Transfer form validation
+        if ( isset( $source['transaction_type'] ) && $source['transaction_type'] == TransactionType::TRANSFER ) {
+            $deposit = new Transaction();
+            $user = new User;
+            $user_obj = $user->data();
+            $total_deposited_amount = $deposit->getCurrentBalance( $user_obj->user_id );
+            
+            // check user exists or not
+            if ( ! $user->exists( $source['email'] )  ) {
+                $this->addError( 'Email not exists!' );                
+            }
+            
+            if ( $source['amount'] > $total_deposited_amount ) {
+                $this->addError( 'Transfer amount must be less than Deposited amount' );                
+            }
+        }        
+        
+        if ( empty( $this->_erros ) ) {
+            $this->_passed = true;
+        }
+                
+        return $this;        
+    }
+    
+    public function passed() {
+        return $this->_passed;
+    }
+    
+    public function addError(string $error): void
+    {
+        $this->_erros[] = $error; 
+    }
+    
+    public function errors() {
+        return $this->_erros;
+    }
+}
