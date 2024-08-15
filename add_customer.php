@@ -35,7 +35,7 @@ if ( Input::exists() ) {
                     
         // $user_data = $user->get( Input::get('email') );
         // var_dump( $user );
-        Session::put('success', 'Custer registeration is successfull!');
+        Session::put('success', 'Customer successfull registered!');
         Session::delete('user');
         // Session::put( Config::get('session/session_name'), $user->data()->email );
         Redirect::to( location: 'customers.php');                                                                    

@@ -49,7 +49,7 @@ $users = $user->load();
         'Helvetica Neue', sans-serif;
     }
   </style>
-
+  
   <title>All Customers</title>
 </head>
 
@@ -70,7 +70,7 @@ $users = $user->load();
                     href="./customers.php"
                     class="px-3 py-2 text-sm font-medium text-white rounded-md bg-sky-700">Customers</a>
                   <a
-                    href="./customer_transactions.php"
+                    href="./transactions.php"
                     class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-sky-500 hover:bg-opacity-75">Transactions</a>
                 </div>
               </div>
@@ -230,7 +230,7 @@ $users = $user->load();
         </div>
       </header>
     </div>
-
+    
     <main class="-mt-32">
       <div class="px-4 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="py-8 bg-white rounded-lg">
@@ -279,7 +279,7 @@ $users = $user->load();
                         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sky-500">
                           <span class="text-xl font-medium leading-none text-white"><?php echo strtoupper( substr( $userobj->name, 0, 2 ) ); ?></span>
                         </span>
-
+                        
                         <div class="flex-auto min-w-0">
                           <p class="text-sm font-semibold leading-6 text-gray-900">
                             <a href="./customer_transactions.php?user_id=<?php echo $userobj->user_id;?>">

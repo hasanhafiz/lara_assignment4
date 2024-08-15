@@ -4,10 +4,8 @@ require_once 'vendor/autoload.php';
 
 use App\User;
 use App\Input;
-use App\Deposit;
 use App\Session;
 use App\Validate;
-use App\Helpers\Utils;
 use App\Transaction;
 use App\TransactionType;
 
@@ -27,7 +25,7 @@ if (Input::exists()) {
   
   $validate = new Validate();
   $validate->check($_POST, ['amount', 'email']);
-
+  
   if ($validate->passed()) {
     $transaction = new Transaction;
     
@@ -66,21 +64,16 @@ if (Input::exists()) {
     // var_dump($transaction->error());
     // Utils::pretty_print( $withdraw->error() , 'withdraw obj after insert data.' );    
     // Utils::pretty_print( $withdraw );    
-
+    
     // $user_data = $withdraw->get( Input::get('email') );
     // var_dump( $withdraw );
     if ($transaction->error() === false) {
       Session::put('success', 'Transfer successfull!');
     }
     
-    // Session::delete('withdraw');
-    // Session::put( Config::get('session/session_name'), $user->data()->email );
-    // Redirect::to(location: 'dashboard.php');
   }
   
-  // $errors = $validate->errors();
-  // var_dump($validate->errors());
-  // Utils::pretty_print( $validate, 'validate.....' );
+  $errors = $validate->errors();
 }
 ?>
 

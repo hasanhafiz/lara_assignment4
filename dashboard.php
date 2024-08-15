@@ -203,9 +203,7 @@ if (Session::exists('user')) {
                                             </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                            <?php foreach ($transaction_data as $data) {
-                                                
-                                                
+                                            <?php foreach ($transaction_data as $data) {                                                                                                
                                                 $user_id = $data['user_id'];
                                                 if ( $data['user_id'] != $data['customer_id'] ) {
                                                   $user_id = $data['customer_id'];

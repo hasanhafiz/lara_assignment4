@@ -23,7 +23,7 @@ class User {
             $this->_is_logged_in = true;  
             if ( $this->data()->is_admin ) {
                 $this->_is_admin = true;
-                echo 'User is admin';
+                 // echo 'User is admin';
             }  
         }
     }
@@ -97,7 +97,18 @@ class User {
             }
         }              
         return false;
-    }    
+    }   
+    
+    public function getByEmail( $email ) {
+        $users = $this->load();
+        foreach ($users as $user) {
+            if ( $email == $user['email'] ) {
+                $this->_data = (object) $user;
+                return $this;
+            }
+        }              
+        return false;
+    }        
     
     public function isAdmin() {
         if ( $this->_data->is_admin ) {

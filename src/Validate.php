@@ -53,14 +53,19 @@ class Validate {
         }
         
         // Transfer form validation
-        if ( isset( $source['transaction_type'] ) && $source['transaction_type'] == TransactionType::TRANSFER ) {
-            $deposit = new Transaction();
+        if ( isset( $source['transaction_type'] ) && $source['transaction_type'] == TransactionType::TRANSFER ) {                        
+            $transaction = new Transaction();
             $user = new User;
             $user_obj = $user->data();
-            $total_deposited_amount = $deposit->getCurrentBalance( $user_obj->user_id );
+            $total_deposited_amount = $transaction->getCurrentBalance( $user_obj->user_id );
             
+            // echo $total_deposited_amount;
             // check user exists or not
-            if ( ! $user->exists( $source['email'] )  ) {
+            
+            // $user = new User;
+            $user = $user->getByEmail( $source['email'] );
+            // var_dump( $user );            
+            if ( ! $user ) {
                 $this->addError( 'Email not exists!' );                
             }
             

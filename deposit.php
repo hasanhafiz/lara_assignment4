@@ -51,7 +51,7 @@ if (Input::exists()) {
     // $user_data = $deposit->get( Input::get('email') );
     // var_dump( $deposit );
     if ( $deposit->error() === false ) {
-      Session::put('success', 'You deposited successfully!');  
+      Session::put('success', 'Deposited successfully!');  
     }
     
     // Session::delete('deposit');
