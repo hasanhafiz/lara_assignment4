@@ -85,7 +85,7 @@ if ( Input::exists() ) {
                     echo '<br/>';                       
                 ?> 
                                     
-                <form novalidate class="space-y-6" action="#" method="POST">
+                <form class="space-y-6" action="register.php" method="POST">
                     <div>
                         <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
                         <div class="mt-2">
