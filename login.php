@@ -29,7 +29,7 @@ if (Input::exists()) {
             echo 'Success!';
             Redirect::to('dashboard.php');
         } else {
-            Session::flash('message', 'Sorry! Log in failed!');
+            Session::put('message', 'Sorry! Log in failed! Either username or password is invalid!');
             // echo "Sorry! Logging is failed!";
         }
     }
@@ -81,7 +81,7 @@ if (Input::exists()) {
                 </div>                    
               <?php } ?>
                 
-                <form class="space-y-6" action="#" method="POST">
+                <form class="space-y-6" action="login.php" method="POST">
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div class="mt-2">
